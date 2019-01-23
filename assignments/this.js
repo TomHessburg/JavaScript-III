@@ -76,3 +76,9 @@ console.log("           new binding example=======");
     console.log(tom.person);
     console.log(tom.thing);
     console.log(tom.doesThing());
+
+
+
+    console.log("========== END OF THE 'this' SECTION ================================");
+    console.log(" ");
+    console.log(" ");
