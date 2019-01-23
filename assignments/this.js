@@ -6,6 +6,7 @@
         If we view this, wel be returned like.... ALL of everything that is JavaScript, because everything in JS is based on objects, and this will return the windows object which includes everything.
 
 * 2. explicit binding: were assiging "this" based explicitly on objects passed into a function for a specific use.
+                        youre essentially "calling" on an object inside of a function to give it context on how to use the "this" keyword within that function.
 
 * 3. implicit binding: Directly onto an object method. For instance, implicit binding lives inside of a prebuilt object and deals souly with that object. uses methods like bind and all.
 
@@ -61,8 +62,8 @@ console.log(tomHessburg.solvePuzzle());     //solvePuzzle is a method implicitly
                 //new uses a constructor function...
 console.log("           new binding example=======");                
 
-    function human(name, thingTheyDo){
-        this.person = name;
+    function human(name, thingTheyDo){  //this is the constructor function. "this" refers to whatever object we construct with this function and its attributes.
+        this.person = name;     
         this.thing = thingTheyDo;
         this.doesThing = function(){
             console.log(`my name is ${this.person} and im doing ${this.thing}`)
