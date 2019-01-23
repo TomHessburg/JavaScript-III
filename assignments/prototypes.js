@@ -8,6 +8,18 @@
   Each constructor function has unique properties and methods that are defined in their block comments below:
 */
   
+
+
+
+
+
+
+
+
+
+
+
+
 /*
   === GameObject ===
   * createdAt
@@ -22,7 +34,23 @@ function GameObject(attributes){          // creates parent prototype.
 
 GameObject.prototype.destroy = function(){
   return `${this.name} was removed from the game...`
-};    //adds destroy method to GameObject prototype
+};    //adds destroy method to GameObject prototype... this will be coppied onto the child and grandchild using Object.create(). Object got create is coppies the prototype of one object and applies it to a child. the parent DOES NOT inherit from a child, but the child can inherit from the parent.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -57,6 +85,16 @@ CharacterStats.prototype.takeDamage = function(){                 //adds charsta
 
 
 
+
+
+
+
+
+
+
+
+
+
 /*
   === Humanoid (Having an appearance or character resembling that of a human.) ===
   * team
@@ -81,6 +119,69 @@ Humanoid.prototype = Object.create(CharacterStats.prototype);   //adds GameObjec
 Humanoid.prototype.greet = function(){                 //adds charstats takeDamage method as described...
   return `${this.name} offers a greeting in ${this.language}.`
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.
+
+
+    //villain constructor
+function Villain (attributes) { //create villain
+  Humanoid.call(this, attributes); //villain takes context of Humanoid for this keyword
+
+  this.evilLevel = attributes.evilLevel;//add evil specific attributes
+  this.evilSidekick = attributes.evilSidekick;
+}
+
+Villain.prototype = Object.create(Humanoid.prototype);//take prototype from humanoid so we can do the same methods with Villain
+
+
+Villain.prototype.rollDice = function() { //add a method for "roll dice", this will be compare to hero class, with a winner causing something to happen... we multiply by hero level to make possible roll higher or lower depending on levels.
+  let evilDiceRoll = Math.round(Math.random()*this.evilLevel);
+  return evilDiceRoll;
+}
+
+
+
+
+
+    //hero constructor
+function Hero (attributes) { //create hero
+  Humanoid.call(this, attributes); //hero takes context of Humanoid for this keyword, NOT Villain, because we dont want the vilains context, we want the humanoids context... theyre seprate
+
+  this.heroLevel = attributes.heroLevel;//add evil specific attributes
+  this.heroSidekick = attributes.heroSidekick;
+}
+
+Hero.prototype = Object.create(Humanoid.prototype);//take prototype from humanoid so we can do the same methods with Villain
+
+
+Hero.prototype.rollDice = function() { //add a method for "roll dice", this will be compare to villain class, same as above...
+  let heroDiceRoll = Math.round(Math.random()*this.heroLevel);
+  return heroDiceRoll;
+}
+
+
+
+
+
+
 
 
 
@@ -167,6 +268,146 @@ Humanoid.prototype.greet = function(){                 //adds charstats takeDama
     language: 'Elvish',
   });
 
+
+
+
+
+
+
+
+
+
+  //create a character using the evil constructor, and its inherited prototypes...
+  
+  const evilSteve = new Villain({
+    createdAt: new Date(),
+  
+    dimensions: {
+      length: 20,
+      width: 5,
+      height: 6,
+    },
+  
+    healthPoints: 20,
+  
+    name: 'steve',
+  
+    team: 'Steves guild for evil doods',
+  
+    weapons: [
+      'evilness',
+    ],
+  
+    language: 'insults',
+    evilLevel: 24,
+    evilSidekick: false
+  });
+  
+
+    //create a character using the hero constructor, and its inherited prototypes...
+  const heroHarry = new Hero({
+    createdAt: new Date(),
+  
+    dimensions: {
+      length: 23,
+      width: 9,
+      height: 3,
+    },
+  
+    healthPoints: 28,
+  
+    name: 'harry',
+  
+    team: 'Harrys magical team for heros who like eating sticks of butter.',
+  
+    weapons: [
+      'a dazeling stare from his pretty blue eyes.... and a mean right hook.',
+    ],
+  
+    language: 'english... hes pretty vanila',
+    heroLevel: 19,
+    heroSidekick: false
+  });  
+
+
+
+
+
+
+
+
+
+
+
+
+    //who they are, and both of their new abilities to roll dice...
+  console.log(evilSteve);
+  console.log(evilSteve.rollDice());
+
+  console.log(heroHarry);
+  console.log(heroHarry.rollDice());
+
+
+
+    function encounter (player1, player2){    //choose your players by inserting their names into the function call, in this case were using evil steve and hero harry
+          //initial dialogue...
+      alert(`${player1.greet()}`);
+      alert(`${player2.greet()}`);
+      alert(`${player1.name} pulls out ${player1.weapons}`);
+      alert(`${player2.name} responds by unsheashing his ${player2.weapons}`);
+      alert(`${player2.name} vs.... ${player1.name}...... FIGHT!@#!@#!@#!@`);
+
+
+        //the fight...
+
+      function fight(){
+        let p1Roll = player1.rollDice();
+        let p2Roll = player2.rollDice();
+        alert(`${player1.name} rolls a ${p1Roll}... ${player2.name} rolls a ${p2Roll}...`);
+
+            //damage dealing section...
+        if(p1Roll > p2Roll){
+          let damage = p1Roll - p2Roll;
+          player2.healthPoints -= p1Roll;
+          alert(`${player1.name} hits and does ${damage} points of damage, leaving ${player2.name} with ${player2.healthPoints} health!`);
+        }else {
+          let damage = p2Roll - p1Roll;
+          player1.healthPoints -= p1Roll;
+          alert(`${player2.name} hits and does ${damage} points of damage, leaving ${player1.name} with ${player1.healthPoints} health!`);
+        }
+
+        if(player1.healthPoints > 0 && player2.healthPoints > 0){
+          fight();      //recursive call instead of a loop here... just seemed a bit more intuitive than a do while or something, tho maybe not the best way to do this.
+        }else if (player1.healthPoints > 0 && player2.healthPoints < 0){
+          alert(`${player1.name} WINS!`);
+        }else {
+          alert(`${player2.name} WINS!`);
+        }
+
+      }
+
+      fight();  
+
+    }
+
+    encounter(evilSteve, heroHarry);
+
+
+
+
+
+
+
+
+
+
+
+
+  console.log(" ");
+  console.log(" ");
+  console.log(" ");
+  console.log(" ");
+  console.log(" ");
   console.log(mage.createdAt); // Today's date
   console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
   console.log(swordsman.healthPoints); // 15
