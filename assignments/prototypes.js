@@ -70,7 +70,7 @@ CharacterStats.prototype.takeDamage = function(){                 //adds charsta
 function Humanoid(attributes){      //creates Humanoid prototype.
   CharacterStats.call(this, attributes);      // derives Charstats as parent and binds this keyword to parent(which derives its prototype from GameObject, working all the way down the line)
 
-  this.team = attributes.healthPoteamints;
+  this.team = attributes.team;
   this.weapons = attributes.weapons;
   this.language = attributes.language;
 }
