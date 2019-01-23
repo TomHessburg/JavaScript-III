@@ -123,7 +123,10 @@ Humanoid.prototype.greet = function(){                 //adds charstats takeDama
 
 
 
-
+Humanoid.prototype.rollDice = function() { 
+  let rollDice = Math.round(Math.random()*this.healthPoints);
+  return rollDice;
+}
 
 
 
@@ -152,10 +155,12 @@ function Villain (attributes) { //create villain
 Villain.prototype = Object.create(Humanoid.prototype);//take prototype from humanoid so we can do the same methods with Villain
 
 
-Villain.prototype.rollDice = function() { //add a method for "roll dice", this will be compare to hero class, with a winner causing something to happen... we multiply by hero level to make possible roll higher or lower depending on levels.
-  let evilDiceRoll = Math.round(Math.random()*this.evilLevel);
-  return evilDiceRoll;
-}
+// Villain.prototype.rollDice = function() { //add a method for "roll dice", this will be compare to hero class, with a winner causing something to happen... we multiply by hero level to make possible roll higher or lower depending on levels.
+//   let evilDiceRoll = Math.round(Math.random()*this.evilLevel);
+//   return evilDiceRoll;
+// }      
+
+      //originally had these set specifically to ehro and villain contructors, but moved to humanoid constructor so anyone could play..
 
 
 
@@ -172,11 +177,11 @@ function Hero (attributes) { //create hero
 Hero.prototype = Object.create(Humanoid.prototype);//take prototype from humanoid so we can do the same methods with Villain
 
 
-Hero.prototype.rollDice = function() { //add a method for "roll dice", this will be compare to villain class, same as above...
-  let heroDiceRoll = Math.round(Math.random()*this.heroLevel);
-  return heroDiceRoll;
-}
-
+// Hero.prototype.rollDice = function() { 
+//   let heroDiceRoll = Math.round(Math.random()*this.heroLevel);
+//   return heroDiceRoll;
+// }
+      //originally had these set specifically to ehro and villain contructors, but moved to humanoid constructor so anyone could play..
 
 
 
@@ -420,6 +425,8 @@ Hero.prototype.rollDice = function() { //add a method for "roll dice", this will
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 
 
+
+  
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
   // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
