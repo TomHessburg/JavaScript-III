@@ -390,17 +390,15 @@ Hero.prototype = Object.create(Humanoid.prototype);//take prototype from humanoi
         }
 
       }
-
       fight();  
-
     }
 
-    encounter(evilSteve, heroHarry);
+    
 
 
 
 
-
+    //encounter(evilSteve, heroHarry);
 
 
 
