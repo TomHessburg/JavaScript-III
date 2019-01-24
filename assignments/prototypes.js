@@ -394,6 +394,22 @@ Hero.prototype = Object.create(Humanoid.prototype);//take prototype from humanoi
     }
 
 
+
+
+    
+    let myElem = document.querySelector(".btn1");
+    let myElem2 = document.querySelector(".btn2");
+   
+
+    
+    myElem.addEventListener("click", function() {
+      return encounter(evilSteve, heroHarry);
+    });
+    myElem2.addEventListener("click", function() {
+      return encounter(swordsman, archer);
+    });
+
+
     //some potential encounters jsut to show that any combination of them will work!
             //encounter(evilSteve, heroHarry);
             //encounter(swordsman, archer);
@@ -430,9 +446,3 @@ Hero.prototype = Object.create(Humanoid.prototype);//take prototype from humanoi
   // * Create two new objects, one a villain and one a hero and fight it out with methods!
 
 
-
-
-
-
-  document.querySelector("button").addEventListener("click", encounter(evilSteve, heroHarry));
- 
